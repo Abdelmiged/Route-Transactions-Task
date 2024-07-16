@@ -5,7 +5,7 @@ let barChartCanvas = document.getElementById("barChart");
 let currentChart = null;
 
 window.addEventListener("load", async function() {
-    let data = await getData("/assets/data/transactions.json");
+    let data = await getData("/Route-Transactions-Task/assets/data/transactions.json");
     
     initializeTable(data);
 });
@@ -118,7 +118,7 @@ export async function constructGraph() {
         currentChart.destroy();
 
     let customerId = this.getAttribute("data-custid");
-    let data = await getData("/assets/data/transactions.json");
+    let data = await getData("/Route-Transactions-Task/assets/data/transactions.json");
     
     let customerTransactions = new Map();
     
