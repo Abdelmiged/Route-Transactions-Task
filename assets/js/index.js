@@ -3,6 +3,7 @@ import * as element from "./createElement.js";
 let tableBody = document.querySelector(".transaction-table tbody");
 let barChartCanvas = document.getElementById("barChart");
 let currentChart = null;
+let chartBackgroundColor = "rgb(255, 255, 255)";
 
 window.addEventListener("load", async function() {
     let data = await getData("/Route-Transactions-Task/assets/data/transactions.json");
@@ -16,7 +17,61 @@ document.querySelector(".filter-form__name-field").addEventListener("input", fun
 
 document.querySelector(".filter-form__amount-field").addEventListener("input", function() {
     filterByAmount(Number(this.value));
-})
+});
+
+document.querySelector(".options-menu__floater-button").addEventListener("click", function() {
+    let optionsMenu = document.querySelector(".options-menu__sorting-floater");
+    optionsMenu.classList.toggle("top-0");
+    optionsMenu.classList.toggle("-top-[4.5rem]");
+    optionsMenu.classList.toggle("opacity-0");
+    optionsMenu.classList.toggle("opacity-100");
+});
+
+document.querySelector(".sort-by-name__ascending").addEventListener("click", function() {
+    sortRows("name", true);
+});
+
+document.querySelector(".sort-by-name__descending").addEventListener("click", function() {
+    sortRows("name", false);
+});
+
+document.querySelector(".sort-by-date__ascending").addEventListener("click", function() {
+    sortRows("date", true);
+});
+
+document.querySelector(".sort-by-date__descending").addEventListener("click", function() {
+    sortRows("date", false);
+});
+
+document.querySelector(".sort-by-amount__ascending").addEventListener("click", function() {
+    sortRows("amount", true);
+});
+
+document.querySelector(".sort-by-amount__descending").addEventListener("click", function() {
+    sortRows("amount", false);
+});
+
+document.querySelector(".options-menu__dark-mode-button").addEventListener("click", function() {
+    document.documentElement.classList.toggle("dark");
+
+    const root = document.querySelector(":root");
+    if(document.documentElement.classList.contains("dark")) {
+        root.style.setProperty("--odd-row-bg-clr", "#646464");
+        root.style.setProperty("--even-row-bg-clr", "#1e1e1e");
+        root.style.setProperty("--row-text-clr", "black");
+        chartBackgroundColor = "rgb(47, 47, 47)";
+    }
+    else {
+        root.style.setProperty("--odd-row-bg-clr", "rgb(240, 242, 248)");
+        root.style.setProperty("--even-row-bg-clr", "#ffffff");
+        root.style.setProperty("--row-text-clr", "white");
+        chartBackgroundColor = "rgb(255, 255, 255)";
+    }
+
+    this.querySelector(".light-mode-icon").classList.toggle("hidden");
+    this.querySelector(".dark-mode-icon").classList.toggle("hidden");
+    currentChart.update();
+});
 
 async function getData(link) {
     let response = await fetch(link);
@@ -112,12 +167,70 @@ function repaintRows(tableRows) {
     }
 }
 
+function sortRows(sortCriteria, sortOrder) {
+    let rows = Array.from(document.querySelectorAll(".transaction-table__body-row"));
+    rows = rows.sort((a, b) => {
+        let aValue = a.querySelector(`.transaction-table__body-${sortCriteria}`).textContent;
+        let bValue = b.querySelector(`.transaction-table__body-${sortCriteria}`).textContent;
+
+        if(sortCriteria == "amount") {
+            aValue = Number(aValue);
+            bValue = Number(bValue);
+        }
+
+        if(aValue < bValue) {
+            return (sortOrder) ? -1 : 1;
+        }
+        else if(aValue > bValue) {
+            return (sortOrder) ? 1 : -1;
+        }
+
+        return 0;
+    });
+    
+    emptyTable();
+    insertRows(rows);
+}
+
+function emptyTable() {
+    for(let item of tableBody.querySelectorAll(".transaction-table__body-row")) {
+        item.remove();
+    }
+}
+
+function insertRows(rows) {
+    for(let item of rows) {
+        tableBody.append(item);
+    }
+    repaintRows(rows);
+}
+
+// Chart Plugin
+const chartAreaBackgroundColor = {
+    id: "chartAreaBackgroundColor",
+    beforeDraw(chart, args, plugins) {
+        const {ctx, chartArea: {
+            top,
+            bottom,
+            left,
+            right,
+            width,
+            height
+        }} = chart;
+
+        ctx.save();
+        ctx.fillStyle = chartBackgroundColor;
+        ctx.fillRect(left, top, width, height);
+    },
+};
+
 
 export async function constructGraph() {
     if(currentChart != null || currentChart != undefined) 
         currentChart.destroy();
 
     let customerId = this.getAttribute("data-custid");
+
     let data = await getData("/Route-Transactions-Task/assets/data/transactions.json");
     
     let customerTransactions = new Map();
@@ -160,6 +273,7 @@ export async function constructGraph() {
             },
             barThickness: 100,
         },
+        plugins: [chartAreaBackgroundColor],
     });
 
     document.querySelector(".canvas-container").scrollIntoView(false);

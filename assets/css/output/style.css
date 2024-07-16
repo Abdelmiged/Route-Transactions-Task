@@ -3,6 +3,12 @@ html {
     scroll-behavior: smooth;
 }
 
+:root {
+    --odd-row-bg-clr: rgb(240, 242, 248);
+    --even-row-bg-clr: white;
+    --row-text-clr: white;
+}
+
 /* Filter Form */
 
 .filter-form input:focus {
@@ -25,24 +31,32 @@ html {
 }
 
 .odd-row-color {
-    background-color: white;
+    /* #646464 */
+    background-color: var(--odd-row-bg-clr);
 }
 
 .even-row-color {
-    background-color: rgb(240, 242, 248);
+    /* #1e1e1e */
+    background-color: var(--even-row-bg-clr);
 }
 
+
+html.dark {
+    color: red !important;
+}
 .transaction-table__body-row {
     cursor: pointer;
     transition: all 0.1s ease-in-out;
 
     &:hover {
         background-color: rgb(232, 181, 247);
+        color: var(--row-text-clr);
     }
 }
 
 .focused-row {
     background-color: rgb(232, 181, 247);
+    color: var(--row-text-clr);
     scale: 1.03;
     outline: 0;
 }

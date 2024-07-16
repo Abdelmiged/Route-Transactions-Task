@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/output/all.min.css">
     <link rel="stylesheet" href="./assets/css/output/output.css">
     <link rel="stylesheet" href="./assets/css/output/style.css">
     <title>Document</title>
 </head>
-<body>
+<body class="bg-white dark:bg-[#121212] dark:text-[#e0e0e0]">
     
+    <div class="options-menu fixed  top-32 -right-[80px] cursor-pointer w-[120px] h-[50px] p-4 rounded-s-md shadow-lg bg-violet-300 hover:right-0 transition-all duration-200 flex justify-around items-center dark:text-black text-[1.2rem]">
+        <button class="options-menu__floater-button"><i class="fa-solid fa-filter"></i></button>
+        <button class="options-menu__dark-mode-button">
+            <i class="light-mode-icon fa-regular fa-moon"></i>
+            <i class="dark-mode-icon fa-solid fa-moon hidden"></i>
+        </button>
+        <div class="options-menu__sorting-floater w-[200px] h-[85px] p-2 rounded-md shadow-lg top-0 opacity-0 z-[-1] absolute right-12 bg-violet-200 transition-all flex flex-col justify-between text-base">
+            <div class="sort-by-name flex justify-between items-center">
+                <button class="sort-by-name__ascending"><i class="fa-solid fa-arrow-up-z-a"></i></button>
+                <span>Sort by Name</span>
+                <button class="sort-by-name__descending"><i class="fa-solid fa-arrow-down-z-a"></i></button>
+            </div>
+            <div class="sort-by-date flex justify-between items-center">
+                <button class="sort-by-date__ascending"><i class="fa-solid fa-arrow-up-wide-short"></i></button>
+                <span>Sort by Date</span>
+                <button class="sort-by-date__descending"><i class="fa-solid fa-arrow-down-wide-short"></i></button>
+            </div>
+            <div class="sort-by-amount flex justify-between items-centernt">
+                <button class="sort-by-amount__ascending"><i class="fa-solid fa-arrow-up-9-1"></i></button>
+                <span>Sort by Amount</span>
+                <button class="sort-by-amount__descending"><i class="fa-solid fa-arrow-down-9-1"></i></button>
+            </div>
+        </div>
+    </div>
+
     <!-- ========== Main Content ========= -->
     <main class="p-4">
 
@@ -17,21 +43,21 @@
             <!-- ========== Filter Form ========== -->
                 <form class="filter-form p-4 mb-6 w-full md:w-9/12 flex justify-center items-center">
                     <div class="p-4 w-full md:w-6/12">
-                        <input class="filter-form__name-field w-full p-2 border-[1px] border-violet-400 outline-0 rounded-md shadow-md transition-all" type="text" placeholder="Filter by Name">
+                        <input class="filter-form__name-field dark:bg-[#2c2c2c] dark:text-[#e0e0e0] dark:border-[#444444] w-full p-2 border-[1px] border-violet-400 outline-0 rounded-md shadow-md transition-all" type="text" placeholder="Filter by Name">
                     </div>
                     <div class="p-4 w-full md:w-6/12">
-                        <input class="filter-form__amount-field w-full p-2 border-[1px] border-violet-400 outline-0 rounded-md shadow-md transition-all" type="number" placeholder="Filter by Amount">
+                        <input class="filter-form__amount-field dark:bg-[#2c2c2c] dark:text-[#e0e0e0] dark:border-[#444444] w-full p-2 border-[1px] border-violet-400 outline-0 rounded-md shadow-md transition-all" type="number" placeholder="Filter by Amount">
                     </div>
                 </form>
                 <!-- ========== End Filter Form ========== -->
 
             <!-- ========== Transaction Table ========== -->
-            <table class="transaction-table w-full md:w-9/12 shadow-2xl rounded-md mb-16">
+            <table class="transaction-table w-full md:w-9/12 shadow-2xl rounded-md mb-16 dark:bg-[#2c2c2c] dark:text-[#e0e0e0] dark:border-collapse">
                 <thead class="shadow-lg">
                     <tr>
-                        <th>Customer</th>
-                        <th>Transaction Date</th>
-                        <th>Transaction Amount</th>
+                        <th class="dark:bg-[#1f1f1f]">Customer</th>
+                        <th class="dark:bg-[#1f1f1f]">Transaction Date</th>
+                        <th class="dark:bg-[#1f1f1f]">Transaction Amount</th>
                     </tr>
                     <tbody class="text-center text-base">
                         
@@ -40,7 +66,7 @@
             </table>
             <!-- ========== End Transaction Table ========== -->
 
-            <div class="canvas-container w-full sm:w-8/12 h-80 flex justify-center items-center">
+            <div class="canvas-container w-full sm:w-8/12 h-80 flex justify-center items-center dark:bg-[#121212]">
                 <canvas id="barChart">
     
                 </canvas>
