@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/output/output.css">
+    <link rel="stylesheet" href="./assets/css/output/style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- ========== Main Content ========= -->
+    <main class="p-4">
+
+        <div class="container flex flex-col items-center">
+            <h1 class="text-3xl font-semibold">Customer Transactions</h1>
+            <!-- ========== Filter Form ========== -->
+                <form class="filter-form p-4 mb-6 w-full md:w-9/12 flex justify-center items-center">
+                    <div class="p-4 w-full md:w-6/12">
+                        <input class="filter-form__name-field w-full p-2 border-[1px] border-violet-400 outline-0 rounded-md shadow-md transition-all" type="text" placeholder="Filter by Name">
+                    </div>
+                    <div class="p-4 w-full md:w-6/12">
+                        <input class="filter-form__amount-field w-full p-2 border-[1px] border-violet-400 outline-0 rounded-md shadow-md transition-all" type="number" placeholder="Filter by Amount">
+                    </div>
+                </form>
+                <!-- ========== End Filter Form ========== -->
+
+            <!-- ========== Transaction Table ========== -->
+            <table class="transaction-table w-full md:w-9/12 shadow-2xl rounded-md mb-16">
+                <thead class="shadow-lg">
+                    <tr>
+                        <th>Customer</th>
+                        <th>Transaction Date</th>
+                        <th>Transaction Amount</th>
+                    </tr>
+                    <tbody class="text-center text-base">
+                        
+                    </tbody>
+                </thead>
+            </table>
+            <!-- ========== End Transaction Table ========== -->
+
+            <div class="canvas-container w-full sm:w-8/12 h-80 flex justify-center items-center">
+                <canvas id="barChart">
+    
+                </canvas>
+            </div>
+        </div>
+    </main>
+    <!-- ========== End Main Content ========= -->
+    
+    <script src="./assets/js/chart.umd.js" type="module"></script>
+    <script src="./assets/js/index.js" type="module"></script>
+</body>
+</html>
